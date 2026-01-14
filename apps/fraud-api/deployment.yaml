@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: fraud-api
-          image: balaji4wm/fraud-anomaly-api:v1.0.3
+          image: balaji4wm/fraud-anomaly-api:v1.0.4
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
