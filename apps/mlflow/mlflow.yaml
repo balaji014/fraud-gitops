@@ -39,7 +39,7 @@ spec:
             - "--host"
             - "0.0.0.0"
             - "--allowed-hosts"
-            - "mlflow.mlops.svc.cluster.local,mlflow,localhost,127.0.0.1"
+            - "*"
             - "--port"
             - "5000"
           volumeMounts:
