@@ -1,0 +1,12 @@
+image:
+  repository: balaji4wm/fraud-anomaly-api
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  MODEL_NAME: fraud_anomaly_model
+  MLFLOW_TRACKING_URI: http://mlflow.mlops.svc.cluster.local:5000

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-api
+  namespace: mlops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fraud-api
+  template:
+    metadata:
+      labels:
+        app: fraud-api
+    spec:
+      containers:
+        - name: fraud-api
+          image: balaji4wm/fraud-anomaly-api:v1.0.0
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_NAME
+              value: "fraud_anomaly_model"
+            - name: MLFLOW_TRACKING_URI
+              value: "http://mlflow.mlops.svc.cluster.local:5000"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraud-api
+  namespace: mlops
+spec:
+  selector:
+    app: fraud-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
